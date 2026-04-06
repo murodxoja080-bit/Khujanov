@@ -22,9 +22,28 @@ async def main():
     print(f"--- {API_TOKEN.split(':')[0]} | KHUJANOV TIZIMI ISHGA TUSHDI ---")
     await dp.start_polling(bot)
 
+# 25-qatordan boshlab hammasini o'chirib, buni qo'ying:
+
+async def main():
+    # Barcha routerlarni va middlewarelarni shu yerda ro'yxatdan o'tkazamiz
+    dp.include_routers(
+        admin_panel.router,
+        ilm_markazi.router,
+        texnik_asboblar.router,
+        music.router  # Music routerni ham shu yerga qo'shdik
+    )
+    
+    # Agar middleware bo'lsa, uni ham shu yerda ko'rsatamiz
+    # dp.message.middleware(middleware_nomi) 
+
+    print("--- Bot muvaffaqiyatli ishga tushdi ---")
+    
+    # Botni ishga tushirish (Polling)
+    await dp.start_polling(bot)
+
 if __name__ == "__main__":
-    asyncio.run(main)
-    from handlers import music, middlewares
-# ...
-dp.message.middleware(middlewares.AntiFloodMiddleware)
-dp.include_router(music.router)
+    import asyncio
+    # Qavslar bilan (main()) yozilishi shart!
+    asyncio.run(main())
+
+    
